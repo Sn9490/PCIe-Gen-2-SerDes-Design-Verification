@@ -1,3 +1,11 @@
+![SystemVerilog](https://img.shields.io/badge/SystemVerilog-Language-blue)
+![UVM](https://img.shields.io/badge/UVM-Verification-green)
+![PCIe_Gen2](https://img.shields.io/badge/PCIe-Gen2-orange)
+![SVA](https://img.shields.io/badge/SVA-Assertions-red)
+![Coverage](https://img.shields.io/badge/Functional-Coverage-yellow)
+![QuestaSim](https://img.shields.io/badge/QuestaSim-Simulator-blue)
+
+
 ## PCIe Gen2 SerDes Design & Verification
 In the Environment of PCle of Gen-2, we have implemented the Physical layer's Serdes block Sublayer (Transmitter block-Scrambler, Encoder, PISO and Receiver block-SIPO, Decoder, Descrambler) which is designed in Verilog and Verified in the UVM Methodology.
 
