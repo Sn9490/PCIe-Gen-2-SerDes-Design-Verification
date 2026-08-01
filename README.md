@@ -1,169 +1,97 @@
-# PCIe Gen-2 SerDes Design & Verification
+<div align="center">
 
-![Verilog](https://img.shields.io/badge/Verilog-RTL-blue)
-![SystemVerilog](https://img.shields.io/badge/SystemVerilog-HVL-blueviolet)
-![UVM](https://img.shields.io/badge/UVM-Verification-green)
-![PCIe Gen2](https://img.shields.io/badge/PCIe-Gen2-orange)
-![SVA](https://img.shields.io/badge/SVA-Assertions-red)
-![QuestaSim](https://img.shields.io/badge/QuestaSim-Simulator-blue)
+# 🛰️ PCIe Gen-2 SerDes — Design & Verification
 
----
+### Physical Layer SerDes Block | UVM-Based Functional Verification
 
-# Project Overview
+![Verilog](https://img.shields.io/badge/HDL-Verilog-0088CE?style=for-the-badge)
+![SystemVerilog](https://img.shields.io/badge/HVL-SystemVerilog-1E88E5?style=for-the-badge)
+![UVM](https://img.shields.io/badge/Methodology-UVM-FF6F00?style=for-the-badge)
+![QuestaSim](https://img.shields.io/badge/Tool-QuestaSim-005A9C?style=for-the-badge)
+![Coverage](https://img.shields.io/badge/Functional_Coverage-100%25-brightgreen?style=for-the-badge)
 
-This project focuses on the **Design and Functional Verification of the PCIe Gen-2 Physical Layer SerDes Block**. The transmitter and receiver sub-blocks were implemented using **Verilog HDL**, and the complete verification environment was developed using the **Universal Verification Methodology (UVM)** in **SystemVerilog**.
-
-The project helped in understanding PCIe architecture, protocol flow, Physical Layer communication, LTSSM, 8b/10b encoding, and verification methodologies used in ASIC/IP verification.
+</div>
 
 ---
 
-# HDL / HVL
+## 📖 Overview
+
+This project implements and verifies the **Physical Layer SerDes sub-block** of the **PCIe Gen-2** protocol. The design covers both the transmit and receive data paths of the SerDes, built in Verilog and verified using a class-based **UVM** testbench.
+
+- **Transmitter path:** Scrambler → 8b/10b Encoder → PISO (Parallel-In Serial-Out)
+- **Receiver path:** SIPO (Serial-In Parallel-Out) → 8b/10b Decoder → Descrambler
+
+## 🧩 Design Blocks
+
+| Block | Function |
+|---|---|
+| **Scrambler** | Randomizes the data stream to reduce EMI and maintain signal integrity |
+| **8b/10b Encoder** | Encodes 8-bit data into 10-bit symbols for DC balance and clock recovery |
+| **PISO** | Converts parallel encoded data into a serial bitstream for transmission |
+| **SIPO** | Converts the received serial bitstream back into parallel data |
+| **8b/10b Decoder** | Decodes 10-bit symbols back into the original 8-bit data |
+| **Descrambler** | Reverses the scrambling operation to recover the original data |
+
+## 🏗️ Verification Environment
+
+Built a **class-based UVM testbench** with the standard verification component hierarchy:
+
+```
+uvm_test
+ └── uvm_env
+      ├── agent (active)
+      │    ├── sequencer
+      │    ├── driver
+      │    └── monitor
+      ├── scoreboard
+      └── coverage collector
+```
+
+**Key verification concepts applied:**
+- Understood the 3-layer PCIe architecture (Transaction Layer, Data Link Layer, Physical Layer) and how data flows through each
+- Studied PCIe throughput, LTSSM (Link Training and Status State Machine), TLP routing & TLP types, DLLP types, and Type 0 / Type 1 configuration space
+- Focused verification scope on the Gen-2 Physical Layer's 8b/10b encoding scheme
+- Developed functional coverage models and an assertion plan for protocol compliance
+- Used the Pipe Interface as the design boundary for the SerDes block
+
+## ✅ Verification Results
+
+| Metric | Result |
+|---|---|
+| Functional Coverage | **100%** |
+| Verification Sign-off | ✅ Achieved |
+| Simulation Tool | QuestaSim |
+
+## 🛠️ Tools & Technologies
 
 - **HDL:** Verilog
 - **HVL:** SystemVerilog
-- **Verification Methodology:** UVM
-- **EDA Tool:** QuestaSim
+- **Methodology:** UVM (Universal Verification Methodology)
+- **Simulator:** QuestaSim
+- **Version Control:** Git
 
----
+## 📂 Repository Structure
 
-# Description
-
-In the PCIe Gen-2 environment, the **Physical Layer SerDes** sub-blocks were designed and verified.
-
-The transmitter consists of:
-
-- Scrambler
-- 8b/10b Encoder
-- Parallel-In Serial-Out (PISO)
-
-The receiver consists of:
-
-- Serial-In Parallel-Out (SIPO)
-- 8b/10b Decoder
-- Descrambler
-
-The RTL was implemented in **Verilog**, and functional verification was performed using a reusable **UVM-based verification environment**.
-
----
-
-# Responsibilities
-
-- Developed a reusable class-based verification environment using the **Universal Verification Methodology (UVM)**.
-
-- Studied the PCIe architecture and understood data transfer through the three protocol layers:
-  - Transaction Layer
-  - Data Link Layer
-  - Physical Layer
-
-- Understood PCIe protocol concepts including:
-  - PCIe Throughput
-  - LTSSM (Link Training and Status State Machine)
-  - TLP Routing
-  - Types of TLPs
-  - Types of DLLPs
-  - Configuration Space (Type-0 and Type-1)
-  - PIPE Interface
-  - 8b/10b Encoding Technique
-
-- Developed directed and constrained-random testcases to verify SerDes functionality.
-
-- Developed functional coverage models and assertion plans.
-
-- Performed simulation, waveform debugging, regression execution, and verification sign-off.
-
-- Achieved **100% Functional Coverage**.
-
----
-
-# Verification Environment
-
-The reusable UVM verification environment includes:
-
-- Sequence Item
-- Sequence
-- Sequencer
-- Driver
-- Monitor
-- Agent
-- Environment
-- Scoreboard
-- Coverage Collector
-- Test
-
----
-
-# Features Verified
-
-- Scrambler functionality
-- Descrambler functionality
-- 8b/10b Encoder
-- 8b/10b Decoder
-- PISO operation
-- SIPO operation
-- Data integrity
-- LTSSM functionality
-- Protocol compliance
-- Functional coverage
-
----
-
-# Tools Used
-
-- Verilog HDL
-- SystemVerilog
-- UVM
-- QuestaSim
-
----
-
-# Results
-
-- Successfully designed the PCIe Gen-2 Physical Layer SerDes RTL.
-- Developed a reusable UVM verification environment.
-- Verified transmitter and receiver functionality.
-- Achieved **100% Functional Coverage**.
-- Successfully completed functional verification sign-off.
-
----
-
-# Repository Structure
-
-```text
-PCIe-Gen2-SerDes-Design-Verification
-│
-├── RTL
-│   ├── Scrambler.v
-│   ├── Encoder.v
-│   ├── PISO.v
-│   ├── SIPO.v
-│   ├── Decoder.v
-│   └── Descrambler.v
-│
-├── UVM
-│   ├── sequence_item.sv
-│   ├── sequence.sv
-│   ├── sequencer.sv
-│   ├── driver.sv
-│   ├── monitor.sv
-│   ├── agent.sv
-│   ├── scoreboard.sv
-│   ├── env.sv
-│   ├── test.sv
-│   └── coverage.sv
-│
-├── Simulation
-│
-├── Waveforms
-│
+```
+├── rtl/            # Verilog RTL source (Scrambler, Encoder, PISO, SIPO, Decoder, Descrambler)
+├── tb/              # UVM testbench (agents, sequences, scoreboard, env, tests)
+├── sim/             # Simulation scripts and QuestaSim run files
+├── docs/            # Verification plan, coverage reports
 └── README.md
 ```
+<!-- Update this structure to match your actual repo layout -->
 
----
+## 🚀 How to Run
 
-# Author
+```bash
+# Example QuestaSim flow — update commands to match your scripts
+vlib work
+vlog -f filelist.f
+vsim -c work.tb_top -do "run -all"
+```
+<!-- Replace with your actual simulation commands / Makefile targets -->
 
-**Guru Naveen Reddy Siddu**
+## 👤 Author
 
-📧 Email: gurunaveenreddys@gmail.com
-
-🔗 LinkedIn: https://www.linkedin.com/in/siddu-guru-naveen-reddy-93b597282
+**Guru Naveen Reddy** — ASIC Design Verification Engineer
+[LinkedIn](https://www.linkedin.com/in/siddu-guru-naveen-reddy-93b597282) · [GitHub](https://github.com/Sn9490) · gurunaveenreddys@gmail.com
